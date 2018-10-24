@@ -11,18 +11,29 @@ library(tidyverse)
 library(stringr)
 ```
 
-```{r, echo=FALSE, message=FALSE}
+```{r download_indiv, echo=FALSE, message=FALSE, cache=TRUE}
 download.file(url = "https://www.fec.gov/files/bulk-downloads/1990/indiv90.zip",
               destfile = "indiv90.zip")
 
 unzip("indiv90.zip")
 
-x <- read_delim("itcont.txt", delim = "|", col_names = FALSE)
+
+indiv <- read_delim("itcont.txt", delim = "|", col_names = FALSE, escape_double = FALSE)
   
   
-x %>% 
+indiv %>% 
   transmute(name = X8, employer = X12, state = X10, amount = X15) %>% 
   filter(str_detect(employer, "HARVARD")) %>% 
   count(employer)
+```
+
+
+```{r download_com, echo=FALSE, message=FALSE, cache=TRUE}
+download.file(url = "https://www.fec.gov/files/bulk-downloads/1990/cm90.zip",
+              destfile = "cm90.zip")
+
+unzip("cm90.zip")
+
+com <- read_delim("cm.txt", delim = "|", col_names = FALSE, escape_double = FALSE)
 ```
 
