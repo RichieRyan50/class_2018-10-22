@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(stringr)
+library(fs)
 ```
+
 
 ```{r download_indiv, echo=FALSE, message=FALSE, cache=TRUE}
 download.file(url = "https://www.fec.gov/files/bulk-downloads/1990/indiv90.zip",
@@ -19,7 +21,8 @@ unzip("indiv90.zip")
 
 
 indiv <- read_delim("itcont.txt", delim = "|", col_names = FALSE, escape_double = FALSE)
-  
+
+file_delete(c("indiv90.zip", "itcont.txt"))  
   
 indiv %>% 
   transmute(name = X8, employer = X12, state = X10, amount = X15) %>% 
@@ -34,6 +37,8 @@ download.file(url = "https://www.fec.gov/files/bulk-downloads/1990/cm90.zip",
 
 unzip("cm90.zip")
 
-com <- read_delim("cm.txt", delim = "|", col_names = FALSE, escape_double = FALSE)
+cm <- read_delim("cm.txt", delim = "|", col_names = FALSE, escape_double = FALSE)
+
+file_delete(c("cm90.zip", "cm.txt"))
 ```
 
