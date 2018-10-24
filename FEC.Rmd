@@ -11,7 +11,10 @@ library(tidyverse)
 library(stringr)
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE}
+download.file(url = "https://www.fec.gov/files/bulk-downloads/1990/indiv90.zip",
+              destfile = "indiv90.zip")
+
 unzip("indiv90.zip")
 
 x <- read_delim("itcont.txt", delim = "|", col_names = FALSE)
